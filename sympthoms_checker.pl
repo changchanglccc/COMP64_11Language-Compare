@@ -37,7 +37,11 @@ disease(hepatitis_c,stomachPain).
 disease(hepatitis_c,itchySkin).
 disease(hepatitis_c,darkUrine).
 
-//?- disease(X,chills),disease(X,rash).
-//X = aids.
+/* When you want to find out the disease you get, just use the queries(if symptons is more than 1) to get the result. */
+/* The more symtons you describe correctly, the specific disease result you get. Here is an example */
+/* ?- disease(X,chills),disease(X,rash). */
+/* X = aids. */
+
+
 
 
