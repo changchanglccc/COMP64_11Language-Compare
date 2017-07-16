@@ -19,3 +19,5 @@ bubble([X,Y|Terms], [Y|Bubbled]) :-
 /*in the opposite side of the previous recursion condition*/
 bubble([X,Y|Terms], [X|Bubbled]) :-
 	X =< Y, bubble([Y|Terms], Bubbled).
+
+ /* Reference: https://gist.github.com/PythonJedi/e3a9c63dc594c370e4043a7cf24275ae */
