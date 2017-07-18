@@ -39,8 +39,8 @@ disease([S],D):-symptom(D,S).
 disease([T|H],D):-symptom(D,T),disease(H,D). 
 
 /**
- we input a list of symptoms the patient have, the prolog will output the disases patient may have.
- For example, disease([chills,fever],D). and D will output 'influenza','aids'.
- so more symptoms you input, more precise the disease the system answer you.
-*/
+ * we input a list of symptoms the patient have, the prolog will output the disases patient may have.
+ * For example, disease([chills,fever],D). and D will output 'influenza','aids'.
+ * so more symptoms you input, more precise the disease the system answer you.
+ */
 
