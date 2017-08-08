@@ -1,5 +1,8 @@
 package test;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,12 +14,13 @@ import org.aspectj.lang.annotation.Aspect;
 
 @Aspect
 public class Symptom_check {
-    static Set<Integer> influenza = new HashSet<Integer>();
-    static Set<Integer> aids = new HashSet<Integer>();
-    static Set<Integer>hepatitis_C= new HashSet<Integer>();
-    static Set<Integer>pregnancy= new HashSet<Integer>();
+     Set<Integer> influenza = new HashSet<Integer>();
+     Set<Integer> aids = new HashSet<Integer>();
+     Set<Integer>hepatitis_C= new HashSet<Integer>();
+     Set<Integer>pregnancy= new HashSet<Integer>();
     
-
+    public File loggingFile = new File("/Users/chongli/Github/6411Lab2-testAspectJ/src/Log.txt");
+    
     public Symptom_check(){
         influenza.add(1);
         influenza.add(2);
@@ -38,6 +42,7 @@ public class Symptom_check {
         aids.add(8);
         aids.add(13);
         aids.add(14);
+        aids.add(29);
 
         hepatitis_C.add(15);
         hepatitis_C.add(6);
@@ -47,6 +52,8 @@ public class Symptom_check {
         hepatitis_C.add(18);
         hepatitis_C.add(19);
         hepatitis_C.add(20);
+        hepatitis_C.add(30);
+        hepatitis_C.add(31);
 
         pregnancy.add(21);
         pregnancy.add(22);
@@ -67,12 +74,14 @@ public class Symptom_check {
         Symptom_check symptom_check=new Symptom_check();
         
         
+        
         System.out.println("******************************  Welcome to our diagnose system ***********************************");
         System.out.println();
         System.out.println("	1.fever		|	2.chills	|	3.cough		|	4.sore throat	|	5.runny		|	6.muscle aches	\n	7.headaches	|	8.fatigue"
                 + "	|	9.vomiting	|	10.diarrhea	|	11.rash		|	12.night sweats	\n	13.mouth ulcers	|	14.swollen lymphNodes	|	15.tired	|"
                 + "	16.joint pain	|	17.nausea	|	18.stomach pain		\n	19.itchy skin	|	20.dark urine	|	21.food aversions	|	22.mood swings	|" +
-                "	23.abdominal bloating	|	24.frequent urination\n	25.sore breasts	|	26.light bleeding	|	27.missed period	|	28.high body temperature");
+                "	23.abdominal bloating	|	24.frequent urination\n	25.sore breasts	|	26.light bleeding	|	27.missed period	|	28.high body temperature"
+                + "|	29.rapid weight loss	|	30.yellow eyes	|	31.weakness		|");
         System.out.print("\n");
         System.out.println("====================== Entry your symptoms, use ' ' to sperate (end with 0) (e.g.: 1 2 0) ===================================");
         int flag=0;
@@ -88,92 +97,108 @@ public class Symptom_check {
         System.out.println("=========================================== Result ==============================================");
         
         //diagnose checking
-        getScoreOfInfluenza(input);
-        getScoreOfAIDS(input);
-        getScoreOfHepatitis_C(input);
-        getScoreOfPregnancy(input);
-        ArrayList<String> results = diagnose(indexs_map);
+        symptom_check.getScoreOfInfluenza(input);
+        symptom_check.getScoreOfAIDS(input);
+        symptom_check.getScoreOfHepatitis_C(input);
+        symptom_check.getScoreOfPregnancy(input);
+        
+        ArrayList<String> results = symptom_check.diagnose(indexs_map);
         System.out.println("YOU MAY HAVE :");
         for(int i=0;i<results.size();i++){
+        	String log = "The result is: " + results.get(i);
+        	symptom_check.writeLog(log,symptom_check.loggingFile);
             System.out.println(results.get(i));
         }
+        
 
     }
     
-    public static void getScoreOfInfluenza(ArrayList<Integer> symptoms){
+    
+    public  void getScoreOfInfluenza(ArrayList<Integer> symptoms){
        int score=0;
        for(int i=0;i<symptoms.size();i++){
            if(influenza.contains(symptoms.get(i))){
                score += 1;
-           }else{
-               score = 0;
            }
        }
-
+//       System.err.println("getScoreOfInfluenza"+score);
+       String log = "> getScoreOfInfluenza（） is counting: " + new Date().toString();
+       writeLog(log,loggingFile);
        indexs_map.put("influenza",score);
     }
 
     
-    public static void getScoreOfAIDS(ArrayList<Integer> symptoms){
+    public  void getScoreOfAIDS(ArrayList<Integer> symptoms){
         int score=0;
         for(int i=0;i<symptoms.size();i++){
             if(aids.contains(symptoms.get(i))){
             	score+=1;
-            }else{
-            	score = 0;
             }
         }
-
+//        System.err.println("getScoreOfAIDS"+score);
+        String log = "> getScoreOfAIDS（） is counting: " + new Date().toString();
+        writeLog(log,loggingFile);
         indexs_map.put("aids",score);
     }
 
     
-    public static void getScoreOfHepatitis_C(ArrayList<Integer> symptoms){
+    public  void getScoreOfHepatitis_C(ArrayList<Integer> symptoms){
         int score=0;
         for(int i=0;i<symptoms.size();i++){
             if(hepatitis_C.contains(symptoms.get(i))){
             	score+=1;
-            }else{
-            	score=0;
             }
         }
-
+//        System.err.println("getScoreOfHepatitis_C"+score);
+        String log = "> getScoreOfHepatitis_C（） is counting: " + new Date().toString();
+        writeLog(log,loggingFile);
         indexs_map.put("hepatitis_C",score);
     }
     
     
-    public static void getScoreOfPregnancy(ArrayList<Integer> symptoms){
+    public  void getScoreOfPregnancy(ArrayList<Integer> symptoms){
         int score=0;
         for(int i=0;i<symptoms.size();i++){
             if(pregnancy.contains(symptoms.get(i))){
             	score+=1;
-            }else{
-            	score=0;
             }
         }
-
+//        System.err.println("getScoreOfPregnancy"+score);
+        String log = "> getScoreOfPregnancy（） is counting: " + new Date().toString();
+        writeLog(log,loggingFile);
         indexs_map.put("pregnancy",score);
     }
 
     
-    public static ArrayList<String> diagnose(HashMap<String,Integer> score_table){	// Calculate the weight and rate of each disease
+    public  ArrayList<String> diagnose(HashMap<String,Integer> score_table){	// Calculate the weight and rate of each disease
     	ArrayList<String> diseaseRateList = new ArrayList<String>();
     	
-    	double rate1 = 0,rate2=0,rate3=0,rate4=0;
-    	int total = score_table.get("influenza")+ score_table.get("aids") + score_table.get("hepatitis_C") + score_table.get("pregnancy");
-
-//    	System.out.println(score_table.get("influenza").doubleValue()/total);
-    	rate1 = score_table.get("influenza").doubleValue()/ total;
-    	rate2 = score_table.get("aids").doubleValue()/total;
-    	rate3 = score_table.get("hepatitis_C").doubleValue()/total;
-    	rate4 = score_table.get("pregnancy").doubleValue()/total;
+    	int rate1 = (score_table.get("influenza")*100)/10; 
+    	int rate2 =	(score_table.get("aids")*100)/10;
+    	int rate3 =	(score_table.get("hepatitis_C")*100)/10;
+    	int rate4 = (score_table.get("pregnancy")*100)/10;
      	
-    	diseaseRateList.add("influenza	" + rate1*100 + "%");
-    	diseaseRateList.add("aids		" + rate2*100 + "%");
-    	diseaseRateList.add("hepatitis_C	" + rate3*100 + "%");
-    	diseaseRateList.add("pregnancy	" + rate4*100 + "%");
+    	diseaseRateList.add("influenza	" + rate1 + "%");
+    	diseaseRateList.add("aids		" + rate2 + "%");
+    	diseaseRateList.add("hepatitis_C	" + rate3 + "%");
+    	diseaseRateList.add("pregnancy	" + rate4 + "%");
     	
     	return diseaseRateList;
     }
 
+    public void writeLog(String log,File file){
+        if(!file.exists())
+            return;
+        try {
+            synchronized (file) {
+                FileWriter fileWriter = new FileWriter(file, true);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                bufferedWriter.write(log);
+                bufferedWriter.newLine();
+                bufferedWriter.close();
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 }

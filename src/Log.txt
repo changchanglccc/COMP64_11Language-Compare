@@ -1,9 +1,16 @@
-> Before call: call(ArrayList test.Symptom_check.diagnose(HashMap))Sun Aug 06 21:08:54 EDT 2017
-> before collecting diagnpse information: call(void test.Symptom_check.getScoreOfInfluenza(ArrayList))Sun Aug 06 21:10:47 EDT 2017
-> before collecting diagnpse information: call(void test.Symptom_check.getScoreOfAIDS(ArrayList))Sun Aug 06 21:10:47 EDT 2017
-> before collecting diagnpse information: call(void test.Symptom_check.getScoreOfHepatitis_C(ArrayList))Sun Aug 06 21:10:47 EDT 2017
-> before collecting diagnpse information: call(void test.Symptom_check.getScoreOfPregnancy(ArrayList))Sun Aug 06 21:10:47 EDT 2017
-> Before call: call(ArrayList test.Symptom_check.diagnose(HashMap))Sun Aug 06 21:10:47 EDT 2017
-> Before executed: execution(ArrayList test.Symptom_check.diagnose(HashMap))Sun Aug 06 21:10:47 EDT 2017
-> After executed: execution(ArrayList test.Symptom_check.diagnose(HashMap))Sun Aug 06 21:10:47 EDT 2017
-> After call: call(ArrayList test.Symptom_check.diagnose(HashMap))Sun Aug 06 21:10:47 EDT 2017
+> before collecting diagnose information: call(void test.Symptom_check.getScoreOfInfluenza(ArrayList))Mon Aug 07 23:36:51 EDT 2017
+> getScoreOfInfluenza（） is counting: Mon Aug 07 23:36:51 EDT 2017
+> before collecting diagnose information: call(void test.Symptom_check.getScoreOfAIDS(ArrayList))Mon Aug 07 23:36:51 EDT 2017
+> getScoreOfAIDS（） is counting: Mon Aug 07 23:36:51 EDT 2017
+> before collecting diagnose information: call(void test.Symptom_check.getScoreOfHepatitis_C(ArrayList))Mon Aug 07 23:36:51 EDT 2017
+> getScoreOfHepatitis_C（） is counting: Mon Aug 07 23:36:51 EDT 2017
+> before collecting diagnose information: call(void test.Symptom_check.getScoreOfPregnancy(ArrayList))Mon Aug 07 23:36:51 EDT 2017
+> getScoreOfPregnancy（） is counting: Mon Aug 07 23:36:51 EDT 2017
+> Before call: call(ArrayList test.Symptom_check.diagnose(HashMap))Mon Aug 07 23:36:51 EDT 2017
+> Before executed: execution(ArrayList test.Symptom_check.diagnose(HashMap))Mon Aug 07 23:36:51 EDT 2017
+> After executed: execution(ArrayList test.Symptom_check.diagnose(HashMap))Mon Aug 07 23:36:51 EDT 2017
+> After call: call(ArrayList test.Symptom_check.diagnose(HashMap))Mon Aug 07 23:36:51 EDT 2017
+The result is: influenza	20%
+The result is: aids		20%
+The result is: hepatitis_C	10%
+The result is: pregnancy	0%

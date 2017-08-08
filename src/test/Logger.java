@@ -7,63 +7,44 @@ import java.util.Date;
 import java.util.HashMap;
 import java.io.FileWriter;
 import java.io.IOException;
-//import org.apache.log4j.Logger;
 
 public aspect Logger {
-//	private File loggingFile = new File("Log.txt");
-	private File loggingFile = new File("/Users/chongli/Github/6411Lab2-testAspectJ/src/Log.txt");
-//	Log log = new Log();
-//	private static final Logger logger = Logger.getLogger(AutoTrace.class);
+//	private File loggingFile = new File("/Users/chongli/Github/6411Lab2-testAspectJ/src/Log.txt");
+
 	String file = "";
 	
-	pointcut diagnose(): call(ArrayList<String> diagnose(HashMap<String,Integer>));
-	pointcut collectDiagnoseInfo():call(void getScoreOfInfluenza(ArrayList<Integer>))
-	||call(void getScoreOfAIDS(ArrayList<Integer>))
-	||call(void getScoreOfHepatitis_C(ArrayList<Integer>))
-	||call(void getScoreOfPregnancy(ArrayList<Integer>));
+	pointcut accessors(Symptom_check c): call(ArrayList<String> diagnose(HashMap<String,Integer>))&& target(c);
+	pointcut collectDiagnoseInfo(Symptom_check c):call(void getScoreOfInfluenza(ArrayList<Integer>))&& target(c)
+	||call(void getScoreOfAIDS(ArrayList<Integer>))&& target(c)
+	||call(void getScoreOfHepatitis_C(ArrayList<Integer>))&& target(c)
+	||call(void getScoreOfPregnancy(ArrayList<Integer>))&& target(c);
 	
-	before():diagnose(){
+	before(Symptom_check c): accessors(c) {
 		System.out.println("> Before call: " + thisJoinPoint);
 		String log = "> Before call: " + thisJoinPoint + new Date().toString();
-		writeLog(log,loggingFile);
+		c.writeLog(log,c.loggingFile);
 	}
-	after():diagnose(){
+	after(Symptom_check c): accessors(c){
 		System.out.println("> After call: " + thisJoinPoint);
 		String log = "> After call: " + thisJoinPoint + new Date().toString();
-		writeLog(log,loggingFile);
+		c.writeLog(log,c.loggingFile);
 	}
 	
-	before():collectDiagnoseInfo(){
-		System.out.println("> before collecting diagnpse information: " + thisJoinPoint);
-		String log = "> before collecting diagnpse information: " + thisJoinPoint + new Date().toString();
-		writeLog(log,loggingFile);
+	before(Symptom_check c):collectDiagnoseInfo(c){
+		System.out.println("> before collecting diagnose information: " + thisJoinPoint);
+		String log = "> before collecting diagnose information: " + thisJoinPoint + new Date().toString();
+		c.writeLog(log, c.loggingFile);
 	}
 	
-	before(): execution(ArrayList<String> diagnose(HashMap<String,Integer>)){
+	before(Symptom_check c):execution(ArrayList<String> diagnose(HashMap<String,Integer>)) && this(c){
 		System.out.println("> Before executed: " + thisJoinPoint);
 		String log = "> Before executed: " + thisJoinPoint + new Date().toString();
-		writeLog(log,loggingFile);
+		c.writeLog(log,c.loggingFile);
 	}
-	after(): execution(ArrayList<String> diagnose(HashMap<String,Integer>)){
+	after(Symptom_check c): execution(ArrayList<String> diagnose(HashMap<String,Integer>)) && this(c){
 		System.out.println("> After executed: " + thisJoinPoint);
 		String log = "> After executed: " + thisJoinPoint + new Date().toString();
-		writeLog(log,loggingFile);
+		c.writeLog(log,c.loggingFile);
 	}
-	
-	public void writeLog(String log,File file){
-        if(!file.exists())
-            return;
-        try {
-            synchronized (file) {
-                FileWriter fileWriter = new FileWriter(file, true);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                bufferedWriter.write(log);
-                bufferedWriter.newLine();
-                bufferedWriter.close();
-            }
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
 
 }
